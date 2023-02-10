@@ -13,7 +13,6 @@ import LibrarySystem.entities.book.BookMethods.BookRepository;
 import LibrarySystem.entities.book.BookMethods.BookRepositoryInter;
 
 public class Main {
-
     public static void main(String[] args) {
         IDB db = new PostgresDB();
 
