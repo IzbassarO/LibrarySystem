@@ -19,7 +19,7 @@ public class UserRepository implements UserRepositoryInter {
         Connection con = null;
         try {
             con = db.getConnection();
-            String sql = "INSERT INTO users VALUES (?,?,?,?)";
+            String sql = "INSERT INTO users VALUES (?,?,?)";
             
             PreparedStatement st = con.prepareStatement(sql);
 
@@ -28,8 +28,6 @@ public class UserRepository implements UserRepositoryInter {
             st.setString(2, user.getName());
 
             st.setString(3, user.getGroup());
-
-            st.setString(4, user.getBorrowedBooks());
 
             st.execute();
 
@@ -62,8 +60,7 @@ public class UserRepository implements UserRepositoryInter {
             if (rs.next()) {
                 User user = new User(rs.getInt("id"),
                         rs.getString("name"),
-                        rs.getString("group"),
-                        rs.getString("books"));
+                        rs.getString("group"));
 
                 return user;
             }
@@ -92,8 +89,7 @@ public class UserRepository implements UserRepositoryInter {
             while (rs.next()) {
                 User user = new User(rs.getInt("id"),
                         rs.getString("name"),
-                        rs.getString("group"),
-                        rs.getString("books"));
+                        rs.getString("group"));
 
                 users.add(user);
             }
