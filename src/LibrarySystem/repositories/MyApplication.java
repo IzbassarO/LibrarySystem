@@ -1,20 +1,22 @@
 package LibrarySystem.repositories;
 
 import LibrarySystem.entities.book.BookMethods.BookController;
+import LibrarySystem.entities.borrowBook.BorrowBookController;
 import LibrarySystem.entities.user.userMethods.UserController;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MyApplication {
-
     private final UserController controller1;
     private final BookController controller2;
+    private final BorrowBookController controller3;
     private final Scanner scanner;
 
-    public MyApplication(UserController controller1, BookController controller2) {
+    public MyApplication(UserController controller1, BookController controller2, BorrowBookController controller3) {
         this.controller1 = controller1;
         this.controller2 = controller2;
+        this.controller3 = controller3;
         scanner = new Scanner(System.in);
     }
 
@@ -49,7 +51,7 @@ public class MyApplication {
                     case 4 -> getAllBooksMenu();
                     case 5 -> getBookByIsbnMenu();
                     case 6 -> addBookMenu();
-//                    case 7 -> borrowBookMenu();
+                    case 7 -> borrowBookMenu();
 //                    case 8 -> returnBookMenu();
                     case 0 -> flag = false;
                     default -> System.out.println("Enter from 1-6!!!");
@@ -97,7 +99,7 @@ public class MyApplication {
             System.out.println("Incorrect input :(");
         }
 
-        String response = controller1.createUser(id, name, group);
+        String response = controller1.createUser(id, name, group, null);
         System.out.println(response);
     }
 
@@ -139,4 +141,28 @@ public class MyApplication {
         System.out.println(response);
     }
 
+    public void borrowBookMenu() {
+        int id;
+
+        int isbn;
+
+        while(true) {
+            System.out.println("Enter id of student:");
+            id = scanner.nextInt();
+
+            System.out.println("Enter isbn of book:");
+            isbn = scanner.nextInt();
+
+            if(id < 10000 && id > 999 && isbn < 100000 && isbn > 9999) {break;}
+
+            System.out.println("Incorrect input :(");
+            System.out.print("Continue?(yes/no): ");
+
+            String cancel = scanner.next();
+            if(cancel.equals("no")) {break;}
+        }
+
+        String response = controller3.borrowBook(id, isbn);
+        System.out.println(response);
+    }
 }

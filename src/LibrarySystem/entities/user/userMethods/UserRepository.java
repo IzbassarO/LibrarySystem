@@ -60,7 +60,8 @@ public class UserRepository implements UserRepositoryInter {
             if (rs.next()) {
                 User user = new User(rs.getInt("id"),
                         rs.getString("name"),
-                        rs.getString("group"));
+                        rs.getString("group"),
+                        rs.getString("books"));
 
                 return user;
             }
@@ -89,7 +90,8 @@ public class UserRepository implements UserRepositoryInter {
             while (rs.next()) {
                 User user = new User(rs.getInt("id"),
                         rs.getString("name"),
-                        rs.getString("group"));
+                        rs.getString("group"),
+                        rs.getString("books"));
 
                 users.add(user);
             }

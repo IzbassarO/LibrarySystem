@@ -11,8 +11,8 @@ public class UserController {
         this.repo = repo;
     }
 
-    public String createUser(int id, String name, String group) {
-        User user = new User(id, name, group);
+    public String createUser(int id, String name, String group, String books) {
+        User user = new User(id, name, group, books);
 
         if(!getUser(id).equals("User was not found!")) return "This id already exist!";
 
