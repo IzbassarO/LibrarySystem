@@ -8,7 +8,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MyApplication {
-
     private final UserController controller1;
     private final BookController controller2;
     private final BorrowBookController controller3;
@@ -24,16 +23,21 @@ public class MyApplication {
     public void start() {
         Scanner scanner = new Scanner(System.in);
 
-        while(true) {
+        boolean flag = true;
+
+        while(flag) {
             System.out.println("Hello, here the following available function: ");
-            System.out.println("\t1) Get all users;\n" +
-                    "\t2) Get user by id;\n" +
-                    "\t3) Create user;\n" +
-                    "\t4) Get all books;\n" +
-                    "\t5) Get book by isbn;\n" +
-                    "\t6) Add book;\n" +
-                    "\t7) To give the certain book to the certain user;\n" +
-                    "\t8) To return a book back to the library from user.\n");
+            System.out.println("""
+                            \t0) To stop program;
+                            \t1) Get all users;
+                            \t2) Get user by id;
+                            \t3) Create user;
+                            \t4) Get all books;
+                            \t5) Get book by isbn;
+                            \t6) Add book;
+                            \t7) To give the certain book to the certain user;
+                            \t8) To return a book back to the library from user.
+                            """);
 
             System.out.print("Choose function you wanna choose: ");
             int choice = scanner.nextInt();
@@ -48,7 +52,8 @@ public class MyApplication {
                     case 5 -> getBookByIsbnMenu();
                     case 6 -> addBookMenu();
                     case 7 -> borrowBookMenu();
-                    case 8 -> returnBookMenu();
+//                    case 8 -> returnBookMenu();
+                    case 0 -> flag = false;
                     default -> System.out.println("Enter from 1-6!!!");
                 }
             }
@@ -78,17 +83,23 @@ public class MyApplication {
     }
 
     public void createUserMenu() {
-        System.out.println("Please enter id");
-        int id = scanner.nextInt();
-        scanner.nextLine();
+        System.out.println("Please enter id(4 digits), name(only one word), group(student, staff):");
 
-        System.out.println("Please enter name");
-        String name = scanner.nextLine();
+        int id;
+        String name;
+        String group;
 
-        System.out.println("Please enter group(student,stuff)");
-        String group = scanner.next();
+        while(true) {
+            id = scanner.nextInt();
+            name = scanner.next();
+            group = scanner.next();
 
-        String response = controller1.createUser(id, name, group, "null");
+            if ((id < 10000 && id > 999) && (group.equals("student") || group.equals("staff"))) {break;}
+
+            System.out.println("Incorrect input :(");
+        }
+
+        String response = controller1.createUser(id, name, group, null);
         System.out.println(response);
     }
 
@@ -106,51 +117,52 @@ public class MyApplication {
     }
 
     public void addBookMenu() {
-        System.out.println("Please enter isbn");
-        int isbn = scanner.nextInt();
-        scanner.nextLine();
+        System.out.println("Please enter isbn(5 digits), title(use '_' instead of space), author(use '_' instead of space), quantity:");
 
-        System.out.println("Please enter title");
-        String title = scanner.nextLine();
+        int isbn;
+        String title;
+        String author;
+        int quantity;
 
-        System.out.println("Please enter author");
-        String author = scanner.nextLine();
+        while(true) {
+            isbn = scanner.nextInt();
+            title = scanner.next();
+            author = scanner.next();
+            quantity = scanner.nextInt();
 
-        System.out.println("Please enter quantity");
-        int quantity = scanner.nextInt();
-        scanner.nextLine();
+            if((isbn < 100000 && isbn > 9999)) {
+                break;
+            }
+
+            System.out.println("Incorrect input :(");
+        }
 
         String response = controller2.addBook(isbn, title, author, quantity);
         System.out.println(response);
     }
 
     public void borrowBookMenu() {
-        System.out.println("Enter your id");
-        int id = scanner.nextInt();
-        scanner.nextLine();
+        int id;
 
-        System.out.println("Enter isbn of book, which you want to take");
-        int isbn = scanner.nextInt();
-        scanner.nextLine();
+        int isbn;
+
+        while(true) {
+            System.out.println("Enter id of student:");
+            id = scanner.nextInt();
+
+            System.out.println("Enter isbn of book:");
+            isbn = scanner.nextInt();
+
+            if(id < 10000 && id > 999 && isbn < 100000 && isbn > 9999) {break;}
+
+            System.out.println("Incorrect input :(");
+            System.out.print("Continue?(yes/no): ");
+
+            String cancel = scanner.next();
+            if(cancel.equals("no")) {break;}
+        }
 
         String response = controller3.borrowBook(id, isbn);
-        if(response.equals(null)) {
-            System.out.println("Reject confirmed");
-            return;
-        }
-        System.out.println(response);
-    }
-
-    private void returnBookMenu() {
-        System.out.println("Enter your id");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.println("Enter isbn of book, which you want to return");
-        int isbn = scanner.nextInt();
-        scanner.nextLine();
-
-        String response = controller3.returnBook(id, isbn);
         System.out.println(response);
     }
 }

@@ -3,43 +3,23 @@ package LibrarySystem.entities.borrowBook;
 import LibrarySystem.entities.user.User;
 import LibrarySystem.entities.book.Book;
 
-import java.util.Scanner;
-
 public class BorrowBookController {
-
     private final BorrowBookRepositoryInter repo;
+
     public BorrowBookController(BorrowBookRepositoryInter repo) {
         this.repo = repo;
     }
 
+
     public String borrowBook(int id, int isbn) {
-        User user = repo.borrowBook(id);
-        Book book = repo.takeBook(isbn);
+        User user = repo.getUser(id);
+        Book book = repo.getBook(isbn);
 
-        System.out.println("Did " + user.getName() + " want take " + book.getTitleOfBook() + "?(yes/no)");
-        Scanner scanner = new Scanner(System.in);
-        String answer = scanner.next();
-        if(answer.equals("yes")) {
-            user.takeBook(book.getTitleOfBook());
+        user.addBook(book.getTitleOfBook());
 
-            repo.changeBook(book);
-            repo.changeUser(user);
+        boolean created1 = repo.updateBook1(book);
+        boolean created2 = repo.updateUser1(user);
 
-            return "book was taken!!!";
-        }
-
-        return null;
-    }
-
-    public String returnBook(int id, int isbn) {
-        User user = repo.returnBook(id);
-        Book book = repo.giveBook(isbn);
-
-        user.giveBook(book.getTitleOfBook());
-
-        repo.changeBook2(book);
-        repo.changeUser2(user);
-
-        return "book was returned!!!";
+        return (created1 && created2 ? "Book was added!" : "Adding book failed!");
     }
 }

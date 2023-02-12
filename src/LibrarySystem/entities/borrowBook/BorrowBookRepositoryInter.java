@@ -4,19 +4,15 @@ import LibrarySystem.entities.user.User;
 import LibrarySystem.entities.book.Book;
 
 public interface BorrowBookRepositoryInter {
-    User borrowBook(int id);
+    boolean updateUser1(User user);
 
-    Book takeBook(int isbn);
+    boolean updateBook1(Book book);
 
-    void changeBook(Book book);
+//    boolean updateUser2(User user);
+//
+//    boolean updateBook2(Book book);
 
-    void changeUser(User user);
+    User getUser(int id);
 
-    User returnBook(int id);
-
-    Book giveBook(int isbn);
-
-    void changeBook2(Book book);
-
-    void changeUser2(User user);
+    Book getBook(int isbn);
 }

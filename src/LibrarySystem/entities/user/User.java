@@ -2,6 +2,7 @@ package LibrarySystem.entities.user;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class User {
     private Integer ID;
@@ -10,59 +11,52 @@ public class User {
 
     private String group;
 
-    private ArrayList<String> borrowedBooks;
-    private String borrowedBooks2;
+    private String books;
+
+    private List<String> arrayBooks;
 
     //constructor
-    public User(Integer ID, String name, String group, String borrowedBooks2) {
+    public User(Integer ID, String name, String group, String books) {
         this.ID = ID;
         this.name = name;
         this.group = group;
-        this.borrowedBooks = new ArrayList<>();
-        this.borrowedBooks2 = borrowedBooks2;
-        borrowedBooks.add(borrowedBooks2);
+        this.books = books;
+        if(books != null) {this.arrayBooks = new ArrayList<>(Arrays.asList(books.split(" ")));}
+        else {this.arrayBooks = new ArrayList<>();}
     }
 
     public User(String name, String group) {
         this.name = name;
         this.group = group;
-        this.borrowedBooks = new ArrayList<>();
     }
-    public User(){
-        this.borrowedBooks = new ArrayList<>();
-    }
+    public User(){}
     //constructor
-
-    //methods
-
-    public void takeBook(String title){
-        borrowedBooks.add(title);
-    }
-
-    public void giveBook(String title) {
-        for (int i = 0; i < borrowedBooks.size(); i++) {
-            if(borrowedBooks.get(i).equals(title)) {
-                borrowedBooks.remove(title);
-                return;
-            }
-        }
-    }
-
-    //methods
 
     //toString
     @Override
     public String toString() {
-//        for(int i = 0; i < borrowedBooks.size(); i++) {
-//            borrowedBooks2 += borrowedBooks.indexOf(i) + "; ";
-//        }
-//      borrowedBooks2 = borrowedBooks.toString().substring(1, borrowedBooks.toString().length() - 1);
-        if(borrowedBooks.size() == 0) {
-            return "";
-        }
+        return "\n" + ID + " " + name + " " + group + " " + books;
+    }
 
-        borrowedBooks2 = Arrays.toString(borrowedBooks.toArray()).replace("[", "").replace("]", "");
-        return "\n" + ID + " " + name + " " + group + " " + borrowedBooks2;
+    public void addBook(String title) {
+        this.arrayBooks.add(title);
+    }
+
+    public String toStringBooks() {
+        switch (arrayBooks.size()) {
+            case 1 -> {
+                return arrayBooks.get(0);
+            }
+            case 2 -> {
+                return arrayBooks.get(0) + " " + arrayBooks.get(1);
+            }
+            case 3 -> {
+                return arrayBooks.get(0) + " " + arrayBooks.get(1) + " " + arrayBooks.get(2);
+            }
+            default -> {
+                return "no books";
+            }
+        }
     }
     //toString
 
@@ -89,10 +83,6 @@ public class User {
 
     public void setGroup(String group) {
         this.group = group;
-    }
-
-    public String getBorrowedBooks() {
-        return borrowedBooks.toString();
     }
     //getters and setters
 }

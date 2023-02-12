@@ -22,6 +22,11 @@ public class Book {
 
     public Book(){}
 
+    public int changeQuantityOfBook() {
+        int quantity = this.quantityOfBook - 1;
+        return quantity;
+    }
+
     @Override
     public String toString() {
         return "\n" + IdOfBook + ' ' + titleOfBook + ' ' + authorOfBook + " " + quantityOfBook;
