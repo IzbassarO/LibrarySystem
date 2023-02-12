@@ -83,13 +83,13 @@ public class MyApplication {
     }
 
     public void createUserMenu() {
-        System.out.println("Please enter id(4 digits), name(only one word), group(student, staff):");
-
         int id;
         String name;
         String group;
 
         while(true) {
+            System.out.println("Please enter id(4 digits), name(only one word), group(student, staff):");
+
             id = scanner.nextInt();
             name = scanner.next();
             group = scanner.next();
