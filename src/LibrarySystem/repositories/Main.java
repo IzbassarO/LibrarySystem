@@ -15,9 +15,7 @@ import LibrarySystem.entities.book.BookMethods.BookRepositoryInter;
 public class Main {
     public static void main(String[] args) {
         IDB db = new PostgresDB();
-
         //Hello Aspandyar to speed dating
-
         UserRepositoryInter repo1 = new UserRepository(db);
         UserController controller1 = new UserController(repo1);
 
